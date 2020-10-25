@@ -15,44 +15,29 @@
         <th>Common Name</th>
         <th>Habitat</th>
         <th>Food</th>
-        <th>Nest Placement</th>
-        <th>Behavior</th>
         <th>Conservation Level</th>
         <th>Backyard Tips</th>
+        <th>&nbsp;</th>
       </tr>
 
 
 <?php
-$parser = new ParseCSV(PRIVATE_PATH . '/wnc-birds.csv');
-$bird_array = $parser->parse();
-// echo '<pre>';
-// print_r($bird_array);
-// echo '</pre>';
-//exit();
+ 
+$birds = Bird::find_all();
+      
 ?>
-      <?php foreach($bird_array as $args) { ?>
-     <?php  $bird = new Bird($args);   ?>
+      <?php foreach($birds as $bird) { ?>
       <tr>
         <td><?php echo $bird->common_name; ?></td>
         <td><?= $bird->habitat; ?></td>
         <td><?= $bird->food; ?></td>
-        <td><?= $bird->nest_palcement; ?></td>
-        <td><?= $bird->behavior; ?></td>
         <td><?php echo $bird->conservation(); ?></td>
         <td><?= $bird->backyard_tips; ?></td>
+        <td><a href="detail.php?id=<?php echo $bird->id; ?>">View</a></td>
       </tr>
 <?php } ?>
     </table>
-
-    <?php
-
-      // This code is from the PDO tutorial from asgn05
-
-      $stmt = $database->query("SELECT * FROM birds");
-      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo 'Name: ' . $row['common_name'] . '<br>';
-      }
-    ?>
+    
   </div>
 
 </div>
